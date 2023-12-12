@@ -3,11 +3,11 @@ from deep_translator import GoogleTranslator
 from datetime import datetime
 from termcolor import colored
 
-versao = "v.23.12.1"
+versao = "v.23.12.2"
 arqMeta = os.path.expanduser("~/.linguax/meta.dados")
 arqXLSX = os.path.expanduser("~/.linguax/historico.xlsx")
 indice = {
-   "Africâner": "af",
+    "Africâner": "af",
     "Albanês": "sq",
     "Amárico": "am",
     "Árabe": "ar",
@@ -70,8 +70,10 @@ indice = {
     "Zulu": "zu",
 }
 
+
 def funcaoTraduzirBasica(texto, i_entrada, i_saida):
     return GoogleTranslator(source=i_entrada, target=i_saida).translate(texto)
+
 
 def traduzirCompleta(idioma_os):
     def verificarCodigo(codigo):
@@ -132,25 +134,30 @@ def traduzirCompleta(idioma_os):
     guardarDados(frase, resp, saida)
     print((colored(resp, attrs=["bold"])))
 
-def traduzirArquivo(idioma_os, caminho):
 
+def traduzirArquivo(idioma_os, caminho):
     idiomaE, idiomaS = verificarIdioma()
     if caminho == 0:
-        fraseEndereco = funcaoTraduzirBasica("Digite o endereço do arquivo ➜ ", "pt", idioma_os)
-        enderecoArquivoEntrada = input(colored(fraseEndereco, "white", "on_magenta", attrs=["bold"]))
+        fraseEndereco = funcaoTraduzirBasica(
+            "Digite o endereço do arquivo ➜ ", "pt", idioma_os
+        )
+        enderecoArquivoEntrada = input(
+            colored(fraseEndereco, "white", "on_magenta", attrs=["bold"])
+        )
     else:
         enderecoArquivoEntrada = caminho
 
     if not os.path.isfile(enderecoArquivoEntrada):
         print("O arquivo não foi encontrado.")
     else:
-        with open(enderecoArquivoEntrada, 'r') as arquivo:
+        with open(enderecoArquivoEntrada, "r") as arquivo:
             conteudoArquivo = arquivo.read()
         conteudoTraduzido = funcaoTraduzirBasica(conteudoArquivo, idiomaE, idiomaS)
-        with open(enderecoArquivoEntrada+"_linguax", "w") as arquivo:
+        with open(enderecoArquivoEntrada + "_linguax", "w") as arquivo:
             arquivo.write(conteudoTraduzido)
         tagArquivo = f"[ARQUIVO={enderecoArquivoEntrada}]"
-        guardarDados(tagArquivo+conteudoArquivo, idiomaE, idiomaS)
+        guardarDados(tagArquivo + conteudoArquivo, idiomaE, idiomaS)
+
 
 def configuracaoMenu():
     def menuIdiomas():
@@ -266,57 +273,6 @@ def configuracaoMenu():
             else:
                 configuracaoMenu()
 
-    def menuAjuda():
-        idioma_nome = funcaoTraduzirBasica("Idioma", "pt", idioma_os)
-        idioma_codigo = funcaoTraduzirBasica("Código", "pt", idioma_os)
-        func_frase = funcaoTraduzirBasica("Função Simples: ", "pt", idioma_os)
-        funcA_frase = funcaoTraduzirBasica(
-            "Defina os idiomas de entrada e saída em: Menu > Configurar idiomas de entrada/saída (2).",
-            "pt",
-            idioma_os,
-        )
-        funcB_frase = funcaoTraduzirBasica(
-            "Com isso configurado você pode utilizar a função de tradução rápida, como no exemplo abaixo:",
-            "pt",
-            idioma_os,
-        )
-        funcC_frase = funcaoTraduzirBasica(
-            "Documentação:",
-            "pt",
-            idioma_os,
-        )
-
-        list_frase = funcaoTraduzirBasica("Lista de idiomas: ", "pt", idioma_os)
-        os.system("clear")
-        print(colored(func_frase, "black", "on_white"))
-
-        print(
-            funcA_frase
-            + "\n"
-            + funcB_frase
-            + "\n\n"
-            + colored("$ liguax ", "white", attrs=["bold"])
-            + "Olá Mundo\n  Hello World\n"
-        )
-        print(
-            "%s ➜ %s\n"
-            % (funcC_frase, "https://github.com/Bill1300/Linguax/blob/main/README.md")
-        )
-        print(
-            colored(list_frase, "black", "on_white")
-            + "\n\n"
-            + idioma_nome
-            + "   "
-            + idioma_codigo
-        )
-
-        for idioma, codigo in indice.items():
-            print("")  # Separador entre informações
-            print(
-                colored(" " + idioma + " ", "black", "on_white", attrs=["bold"])
-                + (colored(" " + codigo + "  ", "white", "on_magenta", attrs=["bold"]))
-            )
-
     def menuInformacoes():
         dev_frase = funcaoTraduzirBasica("Desenvolvido por", "pt", idioma_os)
         dir_frase = funcaoTraduzirBasica("Diretório", "pt", idioma_os)
@@ -330,6 +286,7 @@ def configuracaoMenu():
         )
         print("%s ➜ %s" % (dir_frase, "https://github.com/Bill1300/Linguax"))
         print("%s ➜ %s" % (doc_frase, "https://bill1300.github.io/linguax-docs/"))
+
     entrada = 0
     idioma_os = idiomaInterface()
     traduzir_frase = funcaoTraduzirBasica(
@@ -376,14 +333,16 @@ def configuracaoMenu():
         if entrada == 5:
             menuDesinstalar(numero_frase)
         if entrada == 6:
-            menuAjuda()
+            menuAjuda(idioma_os)
         if entrada == 7:
             menuInformacoes()
+
 
 def detectarIdioma():
     idioma_os, _ = locale.getdefaultlocale()
     arg_saida = idioma_os[:2]
     return idioma_os, arg_saida
+
 
 def idiomaInterface():
     with open(arqMeta, "r") as arquivo:
@@ -392,10 +351,11 @@ def idiomaInterface():
             interface = linhas[2].strip()
             if interface == "auto":
                 interface, _ = verificarIdioma()
-                linhas[2] = interface  # Atualiza a terceira linha
+                linhas[2] = interface
                 with open(arqMeta, "w") as arquivo:
                     arquivo.writelines(linhas)
             return interface
+
 
 def separarPalavras():
     entrada = " ".join(
@@ -404,6 +364,7 @@ def separarPalavras():
         if isinstance(argumento, str) and argumento.strip()
     )
     return entrada
+
 
 def guardarDados(frase, saida, idioma):
     caminhoArqJSON = os.path.expanduser("~/.linguax/historico.json")
@@ -428,6 +389,7 @@ def guardarDados(frase, saida, idioma):
     arq.write(dados + "\n")
     arq.close()
 
+
 def verificarIdioma():
     with open(arqMeta, "r") as arquivo:
         v_entrada = arquivo.readline().strip()
@@ -439,12 +401,14 @@ def verificarIdioma():
 
     return v_entrada, v_saida
 
+
 def metaVazio():
     if os.stat(arqMeta).st_size == 0:
         _, idioma_os = detectarIdioma()
         meta = open(arqMeta, "w")
         meta.write("auto" + "\n" + idioma_os + "\n" + idioma_os)
         meta.close()
+
 
 def verificaConexao():
     url = "https://www.github.com"
@@ -456,20 +420,86 @@ def verificaConexao():
     except (requests.ConnectionError, requests.Timeout, requests.RequestException):
         return False
 
+
+def menuAjuda(idioma_os):
+
+    textos_interface = {
+        "txt01": "Função Comum",
+        "txt01d": "Desse modo é apresentado um menu com as opções disponíveis. Como  mostrado abaixo:",
+        "txt02": "Função Simples",
+        "txt02d": "Para utilizar o programa execute o comando linguax seguido da palavra ou frase a ser traduzida, como no exemplo abaixo:",
+        "txt03": "Defina os idiomas de entrada e saída em: Menu ➜ Configurar idiomas de entrada/saída (item '2').",
+        "txt04": "Documentação",
+        "txt05": "Parâmetros",
+        "txt05a": "Mostrar ajuda.",
+        "txt05t": "Traduzir arquivo.",
+        "txt05t1": "endereço do arquivo"
+    }
+    os.system("clear")
+
+    print(
+    colored(funcaoTraduzirBasica(str(textos_interface["txt01"]), 'pt', idioma_os), "black", "on_white")
+    + "\n\n" + funcaoTraduzirBasica(str(textos_interface['txt03']), 'pt', idioma_os)
+    + "\n" + funcaoTraduzirBasica(str(textos_interface['txt01d']), 'pt', idioma_os)
+
+    + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt02"]), 'pt', idioma_os), "black", "on_white")
+    + "\n\n" + funcaoTraduzirBasica(str(textos_interface['txt03']), 'pt', idioma_os)
+    + "\n" + funcaoTraduzirBasica(str(textos_interface['txt02d']), 'pt', idioma_os)
+
+    + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt04"]), 'pt', idioma_os), "black", "on_white")
+    + "\n\nGithub Page ➜ https://bill1300.github.io/linguax-docs/"
+    + "\nREADME.md ➜ https://github.com/Bill1300/Linguax/blob/main/README.md"
+
+    + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt05"]), 'pt', idioma_os), "black", "on_white")
+    + "\n\n-a, --ajuda ➜ " + funcaoTraduzirBasica(str(textos_interface['txt05a']), 'pt', idioma_os)
+    + "\n-t [" + funcaoTraduzirBasica(str(textos_interface['txt05t1']), 'pt', idioma_os) + "], --texto [" + funcaoTraduzirBasica(str(textos_interface['txt05t1']), 'pt', idioma_os) + "] ➜ " + funcaoTraduzirBasica(str(textos_interface['txt05t']), 'pt', idioma_os)
+)
+
 if verificaConexao():
     frase = separarPalavras()
+    args = frase.split()
     metaVazio()
     if frase == "":
         configuracaoMenu()
     else:
-        if os.path.exists(frase):
-            if os.path.getsize(frase) > 0:
-                traduzirArquivo("en", frase)
+        with open(arqMeta, "r") as arquivo:
+            linhas = arquivo.readlines()
+            if len(linhas) >= 3:
+                idioma_os = linhas[2].strip()
+        if args[0][0] == "-":
+            # arquivo de texto
+            if args[0] == "-t" or args[0] == "--texto":
+                if os.path.exists(args[1]):
+                    if os.path.getsize(args[1]) > 0:
+                        traduzirArquivo(idioma_os, args[1])
+                else:
+                    erroLocal = funcaoTraduzirBasica(
+                        "Arquivo não definido.", "pt", idioma_os
+                    )
+                    print(colored(erroLocal, "white", "on_magenta", attrs=["bold"]))
+            # interface de ajuda
+            elif args[0] == "-a" or args[0] == "--ajuda":
+                menuAjuda(idioma_os)
+            else:
+                erroEntrada = funcaoTraduzirBasica(
+                    "Parâmetro desconhecido.", "pt", idioma_os
+                )
+                print(erroEntrada)
+        # modo simples
         else:
             v_entrada, v_saida = verificarIdioma()
             saida = funcaoTraduzirBasica(frase, v_entrada, v_saida)
             guardarDados(frase, saida, v_saida)
             print((colored(saida, attrs=["bold"])))
 else:
-    print((colored(" Erro de conexão / Conection Error ", "black", "on_white", attrs=["bold"])))
+    print(
+        (
+            colored(
+                " Erro de conexão / Conection Error ",
+                "black",
+                "on_white",
+                attrs=["bold"],
+            )
+        )
+    )
     print("  \U0001F30E ➜ \u274C ➜ \U0001F5A5  ")
