@@ -132,10 +132,14 @@ def traduzirCompleta(idioma_os):
     guardarDados(frase, resp, saida)
     print((colored(resp, attrs=["bold"])))
 
-def traduzirArquivo(idioma_os):
+def traduzirArquivo(idioma_os, caminho):
+
     idiomaE, idiomaS = verificarIdioma()
-    fraseEndereco = funcaoTraduzirBasica("Digite o endereço do arquivo ➜ ", "pt", idioma_os)
-    enderecoArquivoEntrada = input(colored(fraseEndereco, "white", "on_magenta", attrs=["bold"]))
+    if caminho == 0:
+        fraseEndereco = funcaoTraduzirBasica("Digite o endereço do arquivo ➜ ", "pt", idioma_os)
+        enderecoArquivoEntrada = input(colored(fraseEndereco, "white", "on_magenta", attrs=["bold"]))
+    else:
+        enderecoArquivoEntrada = caminho
 
     if not os.path.isfile(enderecoArquivoEntrada):
         print("O arquivo não foi encontrado.")
@@ -364,7 +368,7 @@ def configuracaoMenu():
         if entrada == 1:
             traduzirCompleta(idioma_os)
         if entrada == 2:
-            traduzirArquivo(idioma_os)
+            traduzirArquivo(idioma_os, 0)
         if entrada == 3:
             menuIdiomas()
         if entrada == 4:
@@ -458,10 +462,14 @@ if verificaConexao():
     if frase == "":
         configuracaoMenu()
     else:
-        v_entrada, v_saida = verificarIdioma()
-        saida = funcaoTraduzirBasica(frase, v_entrada, v_saida)
-        guardarDados(frase, saida, v_saida)
-        print((colored(saida, attrs=["bold"])))
+        if os.path.exists(frase):
+            if os.path.getsize(frase) > 0:
+                traduzirArquivo("en", frase)
+        else:
+            v_entrada, v_saida = verificarIdioma()
+            saida = funcaoTraduzirBasica(frase, v_entrada, v_saida)
+            guardarDados(frase, saida, v_saida)
+            print((colored(saida, attrs=["bold"])))
 else:
     print((colored(" Erro de conexão / Conection Error ", "black", "on_white", attrs=["bold"])))
     print("  \U0001F30E ➜ \u274C ➜ \U0001F5A5  ")
