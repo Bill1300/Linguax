@@ -176,7 +176,12 @@ Ao selecionar a remoção os seguintes itens serão removidos:
 
 ### Ajuda ➜
 
-Nessa seção de número `6`, item é apresentado o Modo Simples e o Modo Comum para o usuário, a lista de idiomas com a formatação correta e um link para essa documentação.
+Nessa seção é apresentado o Modo Simples e o Modo Comum para o usuário.
+
+Os parâmetros disponíveis e a documentação:
+
+- `-a` ou `--ajuda` ➜ Mostrar ajuda.
+- `-t [endereço de arquivo]` ou `--texto [endereço de arquivo]` ➜ Traduzir arquivo.
 
 ### Informações ➜
 
