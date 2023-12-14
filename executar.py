@@ -438,22 +438,24 @@ def menuAjuda(idioma_os):
     os.system("clear")
 
     print(
-    colored(funcaoTraduzirBasica(str(textos_interface["txt01"]), 'pt', idioma_os), "black", "on_white")
-    + "\n\n" + funcaoTraduzirBasica(str(textos_interface['txt03']), 'pt', idioma_os)
-    + "\n" + funcaoTraduzirBasica(str(textos_interface['txt01d']), 'pt', idioma_os)
+        colored(" Linguax ", "white", "on_magenta", attrs=["bold"])
+        + colored("(2023) " + versao + " ", "black", "on_white")
+        + colored(funcaoTraduzirBasica(str(textos_interface["txt01"]), 'pt', idioma_os), "black", "on_white")
+        + "\n\n" + funcaoTraduzirBasica(str(textos_interface['txt03']), 'pt', idioma_os)
+        + "\n" + funcaoTraduzirBasica(str(textos_interface['txt01d']), 'pt', idioma_os)
 
-    + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt02"]), 'pt', idioma_os), "black", "on_white")
-    + "\n\n" + funcaoTraduzirBasica(str(textos_interface['txt03']), 'pt', idioma_os)
-    + "\n" + funcaoTraduzirBasica(str(textos_interface['txt02d']), 'pt', idioma_os)
+        + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt02"]), 'pt', idioma_os), "black", "on_white")
+        + "\n\n" + funcaoTraduzirBasica(str(textos_interface['txt03']), 'pt', idioma_os)
+        + "\n" + funcaoTraduzirBasica(str(textos_interface['txt02d']), 'pt', idioma_os)
 
-    + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt04"]), 'pt', idioma_os), "black", "on_white")
-    + "\n\nGithub Page ➜ https://bill1300.github.io/linguax-docs/"
-    + "\nREADME.md ➜ https://github.com/Bill1300/Linguax/blob/main/README.md"
+        + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt04"]), 'pt', idioma_os), "black", "on_white")
+        + "\n\nGithub Page ➜ https://bill1300.github.io/linguax-docs/"
+        + "\nREADME.md ➜ https://github.com/Bill1300/Linguax/blob/main/README.md"
 
-    + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt05"]), 'pt', idioma_os), "black", "on_white")
-    + "\n\n-a, --ajuda ➜ " + funcaoTraduzirBasica(str(textos_interface['txt05a']), 'pt', idioma_os)
-    + "\n-t [" + funcaoTraduzirBasica(str(textos_interface['txt05t1']), 'pt', idioma_os) + "], --texto [" + funcaoTraduzirBasica(str(textos_interface['txt05t1']), 'pt', idioma_os) + "] ➜ " + funcaoTraduzirBasica(str(textos_interface['txt05t']), 'pt', idioma_os)
-)
+        + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt05"]), 'pt', idioma_os), "black", "on_white")
+        + "\n\n-a, --ajuda ➜ " + funcaoTraduzirBasica(str(textos_interface['txt05a']), 'pt', idioma_os)
+        + "\n-t [" + funcaoTraduzirBasica(str(textos_interface['txt05t1']), 'pt', idioma_os) + "], --texto [" + funcaoTraduzirBasica(str(textos_interface['txt05t1']), 'pt', idioma_os) + "] ➜ " + funcaoTraduzirBasica(str(textos_interface['txt05t']), 'pt', idioma_os)
+    )
 
 if verificaConexao():
     frase = separarPalavras()
