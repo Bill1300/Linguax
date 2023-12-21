@@ -15,22 +15,22 @@ Para instalar o programa execute o comando:
 >$ bash instalador&#46;sh
 
 (É necessário a inserir a senha de super-usuário)
-v
+
 ### Execução ➜
 
 #### Modo Simples
 
 Para utilizar o programa execute o comando **linguax** seguido da palavra ou frase a ser traduzida, como no exemplo abaixo:
 
-> $ **linguax** hello world
+> $ **linguax** Olá Mundo
 
-Saída ➜ olá mundo
+Saída ➜ Hello World
 
 <div align="center">
     <img width="600" src="https://i.imgur.com/UI0TOHh.png">
 </div>
 
-Para que isso seja executado de modo eficiente e correto defina os idiomas de entrada/saída .
+Para que isso seja executado de modo eficiente e correto defina os idiomas de entrada/saída.
 
 #### Modo Comum
 
@@ -54,7 +54,7 @@ Selecione **Traduzir uma palavra ou frase** (tecla `1` no menu), informar o idio
 
 ## Traduzir arquivo ➜
 
-Para realizar a tradução de um arquivo de texto, deve ser selecionado o item `2` no menu de opções. É necessário fornecer o endereço do arquivo desejado. Posteriormente, o conteúdo é traduzido e um novo arquivo é gerado no mesmo diretório, mantendo o mesmo nome, porém acrescentando "_linguax". A tradução é realizada para o idioma previamente definido no perfil do usuário.
+Para realizar a tradução de um arquivo de texto, deve ser selecionado o item `2` no menu de opções. É necessário fornecer o endereço do arquivo desejado. Posteriormente, o conteúdo é traduzido e um novo arquivo é gerado no mesmo diretório, mantendo o mesmo nome, porém acrescentando `_linguax`. A tradução é realizada para o idioma previamente definido no perfil do usuário.
 
 ## Configurar idiomas ➜
 
