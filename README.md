@@ -2,7 +2,7 @@
 <img  width="240"  src="https://i.imgur.com/6TcTQ9B.png">
 </div>
 
-<span>Versão: 23.12.1 <a style="color:#909" href="https://bill1300.github.io/linguax-docs/">Documentação ➜</a></span>
+<span>Versão: 23.12.4 <a style="color:#909" href="https://bill1300.github.io/linguax-docs/">Documentação ➜</a></span>
 
 <span>Este obra está licenciado com uma <a style="color:#909" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 Licença Creative Commons Atribuição-NãoComercial-CompartilhaIgual 4.0 Internacional</a>.</span>

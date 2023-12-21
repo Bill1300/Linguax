@@ -3,7 +3,7 @@ from deep_translator import GoogleTranslator
 from datetime import datetime
 from termcolor import colored
 
-versao = "v.23.12.2"
+versao = "v.23.12.4"
 arqMeta = os.path.expanduser("~/.linguax/meta.dados")
 arqXLSX = os.path.expanduser("~/.linguax/historico.xlsx")
 indice = {
@@ -423,6 +423,13 @@ def verificaConexao():
 
 def menuAjuda(idioma_os):
 
+    def print_lista_idiomas(indice):
+        print("| {:<7} | {:<25} | {:<7} |".format("Índice", "Idioma", "Código"))
+        print("|---------|---------------------------|---------|")
+
+        for i, (idioma, codigo) in enumerate(indice.items(), start=1):
+            print("| {:<7} | {:<25} | {:<7} |".format(i, idioma, codigo))
+
     textos_interface = {
         "txt01": "Função Comum",
         "txt01d": "Desse modo é apresentado um menu com as opções disponíveis. Como  mostrado abaixo:",
@@ -433,7 +440,8 @@ def menuAjuda(idioma_os):
         "txt05": "Parâmetros",
         "txt05a": "Mostrar ajuda.",
         "txt05t": "Traduzir arquivo.",
-        "txt05t1": "endereço do arquivo"
+        "txt05t1": "endereço do arquivo",
+        "txtlista": "Lista de idiomas",
     }
     os.system("clear")
 
@@ -455,53 +463,61 @@ def menuAjuda(idioma_os):
         + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txt05"]), 'pt', idioma_os), "black", "on_white")
         + "\n\n-a, --ajuda ➜ " + funcaoTraduzirBasica(str(textos_interface['txt05a']), 'pt', idioma_os)
         + "\n-t [" + funcaoTraduzirBasica(str(textos_interface['txt05t1']), 'pt', idioma_os) + "], --texto [" + funcaoTraduzirBasica(str(textos_interface['txt05t1']), 'pt', idioma_os) + "] ➜ " + funcaoTraduzirBasica(str(textos_interface['txt05t']), 'pt', idioma_os)
+        + "\n\n" + colored(funcaoTraduzirBasica(str(textos_interface["txtlista"]), 'pt', idioma_os), "black", "on_white") + "\n\n"
     )
+    print_lista_idiomas(indice)
 
-if verificaConexao():
-    frase = separarPalavras()
-    args = frase.split()
-    metaVazio()
-    if frase == "":
-        configuracaoMenu()
-    else:
-        with open(arqMeta, "r") as arquivo:
-            linhas = arquivo.readlines()
-            if len(linhas) >= 3:
-                idioma_os = linhas[2].strip()
-        if args[0][0] == "-":
-            # arquivo de texto
-            if args[0] == "-t" or args[0] == "--texto":
-                if os.path.exists(args[1]):
-                    if os.path.getsize(args[1]) > 0:
-                        traduzirArquivo(idioma_os, args[1])
-                else:
-                    erroLocal = funcaoTraduzirBasica(
-                        "Arquivo não definido.", "pt", idioma_os
-                    )
-                    print(colored(erroLocal, "white", "on_magenta", attrs=["bold"]))
-            # interface de ajuda
-            elif args[0] == "-a" or args[0] == "--ajuda":
-                menuAjuda(idioma_os)
-            else:
-                erroEntrada = funcaoTraduzirBasica(
-                    "Parâmetro desconhecido.", "pt", idioma_os
-                )
-                print(erroEntrada)
-        # modo simples
+
+def main():
+    if verificaConexao():
+        frase = separarPalavras()
+        args = frase.split()
+        metaVazio()
+        if frase == "":
+            configuracaoMenu()
         else:
-            v_entrada, v_saida = verificarIdioma()
-            saida = funcaoTraduzirBasica(frase, v_entrada, v_saida)
-            guardarDados(frase, saida, v_saida)
-            print((colored(saida, attrs=["bold"])))
-else:
-    print(
-        (
-            colored(
-                " Erro de conexão / Conection Error ",
-                "black",
-                "on_white",
-                attrs=["bold"],
+            with open(arqMeta, "r") as arquivo:
+                linhas = arquivo.readlines()
+                if len(linhas) >= 3:
+                    idioma_os = linhas[2].strip()
+            if args[0][0] == "-":
+                # arquivo de texto
+                if args[0] == "-t" or args[0] == "--texto":
+                    if os.path.exists(args[1]):
+                        if os.path.getsize(args[1]) > 0:
+                            traduzirArquivo(idioma_os, args[1])
+                    else:
+                        erroLocal = funcaoTraduzirBasica(
+                            "Arquivo não definido.", "pt", idioma_os
+                        )
+                        print(colored(erroLocal, "white", "on_magenta", attrs=["bold"]))
+                # interface de ajuda
+                elif args[0] == "-a" or args[0] == "--ajuda":
+                    menuAjuda(idioma_os)
+                else:
+                    erroEntrada = funcaoTraduzirBasica(
+                        "Parâmetro desconhecido.", "pt", idioma_os
+                    )
+                    print(erroEntrada)
+            # modo simples
+            else:
+                v_entrada, v_saida = verificarIdioma()
+                saida = funcaoTraduzirBasica(frase, v_entrada, v_saida)
+                guardarDados(frase, saida, v_saida)
+                print((colored(saida, attrs=["bold"])))
+    else:
+        print(
+            (
+                colored(
+                    " Erro de conexão / Conection Error ",
+                    "black",
+                    "on_white",
+                    attrs=["bold"],
+                )
             )
         )
-    )
-    print("  \U0001F30E ➜ \u274C ➜ \U0001F5A5  ")
+        print("  \U0001F30E ➜ \u274C ➜ \U0001F5A5  ")
+
+
+if __name__ == "__main__":
+    main()
