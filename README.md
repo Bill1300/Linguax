@@ -176,7 +176,7 @@ Ao selecionar a remoção os seguintes itens serão removidos:
 
 ### Ajuda ➜
 
-Nessa seção é apresentado o Modo Simples e o Modo Comum para o usuário.
+Nessa seção é apresentado a lista de idiomas com seus respectivos códigos, o Modo Simples e o Modo Comum para o usuário.
 
 Os parâmetros disponíveis e a documentação:
 
